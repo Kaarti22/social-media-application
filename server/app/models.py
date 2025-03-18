@@ -6,12 +6,16 @@ class UserCreate(BaseModel):
     email: str
     password: str
 
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
 class PostCreate(BaseModel):
     content: str
-    user_id: str
+    userId: str
 
 class PostResponse(BaseModel):
     id: str
     content: str
     createdAt: datetime
-    user_id: str
+    userId: str

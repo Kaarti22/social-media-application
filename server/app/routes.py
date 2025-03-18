@@ -4,7 +4,7 @@ from app.models import UserCreate, PostCreate
 
 router = APIRouter()
 
-@router.post("/users/")
+@router.post("/register/")
 async def create_user(user: UserCreate):
     return await db.user.create(data=user.dict())
 
