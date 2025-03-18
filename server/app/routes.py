@@ -8,10 +8,6 @@ router = APIRouter()
 async def create_user(user: UserCreate):
     return await db.user.create(data=user.dict())
 
-@router.get("/users/")
-async def get_users():
-    return await db.user.find_many()
-
 @router.post("/posts/")
 async def create_post(post: PostCreate):
     return await db.post.create(data=post.dict())
