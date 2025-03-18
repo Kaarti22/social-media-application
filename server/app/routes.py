@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Header, HTTPException
 from app.database import db
 from app.models import UserCreate, PostCreate
 
@@ -16,6 +16,11 @@ async def get_users():
 async def create_post(post: PostCreate):
     return await db.post.create(data=post.dict())
 
+SECRET_API_KEY = "your_secret_api_key_here"
+
 @router.get("/posts/")
-async def get_posts():
-    return await db.post.find_many()
+async def get_posts(api_key: str = Header(None)):
+    if api_key != SECRET_API_KEY:
+        raise HTTPException(status_code=403, detail="Unauthorized")
+    posts = await db.post.find_many()
+    return posts
