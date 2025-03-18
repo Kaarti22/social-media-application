@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client-py"
 }
 
 datasource db {
@@ -13,9 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+  posts    Post[]
+}
+
 model Post {
   id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
   userId    String
-  text      String
-  timestamp DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
